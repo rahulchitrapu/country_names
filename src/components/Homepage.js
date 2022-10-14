@@ -6,25 +6,25 @@ import Cardlist from './Cardlist'
 
 
 
-export default function Homepage() {
-    const[data,setData]=useState([])
+export default function Homepage({func,myData}) {
+    const[data,setData]=useState(myData)
     const[search,setSearch]=useState("")
-    const [filteredData,setFilteredData]=useState([])
+    const [filteredData,setFilteredData]=useState(myData)
     const [region,setRegion]=useState([])
     const [selectedRegion,setSelectedRegion]=useState("")
 
-    useEffect(()=>{
-        fetch(`https://restcountries.com/v2/all`)
-        .then((res)=>res.json())
-        .then(data=>{
+    // useEffect(()=>{
+    //     fetch(`https://restcountries.com/v2/all`)
+    //     .then((res)=>res.json())
+    //     .then(data=>{
             
-            setData(data)
-            setFilteredData(data)
-            setRegion(Object.values(findRegion(data)))
+    //         setData(data)
+    //         setFilteredData(data)
+    //         setRegion(Object.values(findRegion(data)))
             
-        })
+    //     })
 
-    },[])
+    // },[])
     useEffect(()=>{
         if(selectedRegion==""){
             setFilteredData(data)
@@ -33,6 +33,10 @@ export default function Homepage() {
             setFilteredData(filterRegion(data,selectedRegion))
         }
     },[selectedRegion])
+    useEffect(()=>{
+        setRegion(Object.values(findRegion(data)))
+       
+    },[])
 
     function filterRegion(data,reg){
         let arr=data.filter(country=>{
@@ -80,14 +84,7 @@ export default function Homepage() {
   
   return (
     <div className="container">
-        <div className='navbar'>
-            <Stack direction='row'>
-                <Text ml="20px" fontSize='30px' >Where in the world</Text>
-            </Stack>
-            <Stack>
-                <Text mr="20px" fontSize="30px">Dark mode</Text>
-            </Stack>
-        </div>
+       
         <div className='flex'>   
                 <div className='flex'>
 
@@ -108,7 +105,7 @@ export default function Homepage() {
         </div>
         <div>
 
-            <Cardlist data={filteredData}/>
+            <Cardlist data={filteredData} func={func}/>
         </div>
     </div>
   )

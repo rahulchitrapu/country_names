@@ -1,9 +1,10 @@
 import React from 'react'
 import { Flex, Image,Text,Box,Badge } from '@chakra-ui/react'
-export default function Card({country}) {
+import { Link } from 'react-router-dom'
+export default function Card({country,func}) {
   return (
-    <div className='card'>
-    <Box maxW='sm' margin="10px" borderWidth='1px' borderRadius='lg' overflow='hidden'>
+   <div className='card' onClick={()=>func(country)}>
+     <Link to="/details"><Box maxW='sm' margin="10px" borderWidth='1px' borderRadius='lg' overflow='hidden'>
         
       <Image w="100%" h="200px" src={country.flags.png} alt={country.name} />
 
@@ -42,6 +43,7 @@ export default function Card({country}) {
         
       </Box>
     </Box>
+    </Link>
     </div>
   )
 }
