@@ -4,16 +4,18 @@ import './App.css';
 import Homepage from './components/Homepage';
 import { useState,useEffect } from 'react'
 import Details from "./components/Details";
-import { Text,Spinner,Stack,Badge,Input,Select, Button} from '@chakra-ui/react'
+import { Text,Spinner,Stack} from '@chakra-ui/react'
 import {BrowserRouter} from "react-router-dom"
 import { Route, Routes } from 'react-router';
+import {useColorMode} from "@chakra-ui/react"
 
 
 
 function App() {
   const[country,setCountry]=useState({})
   const[data,setData]=useState([])
-
+  const {toggleColorMode,colorMode}=useColorMode()
+  
 
   useEffect(()=>{
     fetch(`https://restcountries.com/v2/all`)
@@ -52,14 +54,14 @@ function App() {
                     <Text ml="30px" fontSize='30px' >Where in the world</Text>
                 </Stack>
                 <Stack>
-                    <Text mr="30px" fontSize="30px">Dark mode</Text>
+                    <Text cursor="pointer" mr="30px" onClick={toggleColorMode} fontSize="30px">{colorMode==="light"?"Dark mode":"Light mode"}</Text>
                 </Stack>
             </div>
             <Routes>
               <Route path="/" element={<Homepage myData={data} func={selectedCountry}/>}></Route>
               <Route path="/details" element={ <Details obj={country}/>}></Route>
             </Routes>
-          {/* {Object.keys(country).length>0 && <Details obj={country}/>} */}
+        
         </div>
       
     </BrowserRouter>

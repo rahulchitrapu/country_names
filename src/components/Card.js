@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Image,Text,Box,Badge } from '@chakra-ui/react'
+import { Image,Text,Box} from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 export default function Card({country,func}) {
   return (
