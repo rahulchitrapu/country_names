@@ -13,26 +13,27 @@ export default function Homepage({func,myData}) {
     const [region,setRegion]=useState([])
     const [selectedRegion,setSelectedRegion]=useState("")
 
-    // useEffect(()=>{
-    //     fetch(`https://restcountries.com/v2/all`)
-    //     .then((res)=>res.json())
-    //     .then(data=>{
-            
-    //         setData(data)
-    //         setFilteredData(data)
-    //         setRegion(Object.values(findRegion(data)))
-            
-    //     })
-
-    // },[])
     useEffect(()=>{
         if(selectedRegion==""){
             setFilteredData(data)
         }
         else{
-            setFilteredData(filterRegion(data,selectedRegion))
+            setFilteredData(filterRegion(filteredData,selectedRegion))
         }
+        searchFunc()
     },[selectedRegion])
+    useEffect(()=>{
+        if(search===""){
+            if(selectedRegion===""){
+                setFilteredData(data)
+            }
+            else{
+                setFilteredData(filterRegion(filteredData,selectedRegion))
+            }
+            
+        }
+    },[search])
+
     useEffect(()=>{
         setRegion(Object.values(findRegion(data)))
        
@@ -50,7 +51,13 @@ export default function Homepage({func,myData}) {
         console.log("search is working")
         let arr=(data.filter((country)=>{
             if(country.name.toLowerCase().includes(search.toLowerCase())){
-                return country
+                if(selectedRegion===""){
+                    return country
+                }
+                if(country.region===selectedRegion){
+                    return country
+                }
+                
             }
         }))
         setFilteredData(arr)
@@ -63,6 +70,11 @@ export default function Homepage({func,myData}) {
             }
         })
         return obj
+    }
+
+    function onChangeHandler(e){
+        setSearch(e.target.value)
+        searchFunc()
     }
 
 
@@ -88,7 +100,7 @@ export default function Homepage({func,myData}) {
         <div className='flex'>   
                 <div className='flex'>
 
-                    <div ><Input placeholder='search' size='lg'  value={search} onChange={(e)=>{setSearch(e.target.value)}} /></div>
+                    <div ><Input placeholder='search' size='lg'  value={search} onChange={(e)=>{onChangeHandler(e)}} /></div>
                     <div onClick={()=>searchFunc()}><Button >search</Button></div>
                 </div>
                 <div>
