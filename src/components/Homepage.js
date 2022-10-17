@@ -48,7 +48,7 @@ export default function Homepage({func,myData}) {
         return arr
     }
     function searchFunc(){
-        console.log("search is working")
+       
         let arr=(data.filter((country)=>{
             if(country.name.toLowerCase().includes(search.toLowerCase())){
                 if(selectedRegion===""){

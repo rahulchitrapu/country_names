@@ -2,9 +2,10 @@ import React from 'react'
 import { Image,Text,Box} from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 export default function Card({country,func}) {
+  const path=`/countries/${country.alpha3Code}`
   return (
    <div className='card' onClick={()=>func(country)}>
-     <Link to="/details"><Box maxW='sm' margin="10px" borderWidth='1px' borderRadius='lg' overflow='hidden'>
+     <Link to={path}><Box maxW='sm' margin="10px" borderWidth='1px' borderRadius='lg' overflow='hidden'>
         
       <Image w="100%" h="200px" src={country.flags.png} alt={country.name} />
 

@@ -2,7 +2,8 @@ import { Button,Image ,Box,Text} from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import React from 'react'
 
-export default function Details({obj}) {
+export default function Details({obj,func}) {
+    
     function createBorders(){
         if(!obj.borders){
             obj.borders=[]
@@ -62,9 +63,9 @@ export default function Details({obj}) {
 
                     <Text fontSize='lg'>Border Countries :</Text>
                         {obj.borders.map((bor) => {
+                            let path=`${obj.alpha3Code}/${bor}`
                             return(
-                                <Button colorScheme='blue' variant='outline'>{bor}</Button>
-                            
+                                <Link key={bor} to="/countries/:code"><Button onClick={()=>func(bor)} colorScheme='blue' variant='outline'>{bor}</Button></Link>
                             )
                         })}
                 </Box>}

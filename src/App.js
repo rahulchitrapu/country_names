@@ -11,10 +11,14 @@ import {useColorMode} from "@chakra-ui/react"
 
 
 
+
 function App() {
   const[country,setCountry]=useState({})
   const[data,setData]=useState([])
   const {toggleColorMode,colorMode}=useColorMode()
+  const [countryCode,setCountryCode]=useState("")
+ 
+  const [border,setBorder]=useState({})
   
 
   useEffect(()=>{
@@ -26,7 +30,21 @@ function App() {
         
     })
 
-},[])
+  },[])
+
+    
+
+  function borderCountry(code){
+      
+      data.forEach(c=>{
+        if(c.alpha3Code===code){
+            setCountry(c)
+            return 
+        }
+      })
+  }
+ 
+
   function selectedCountry(obj){
     setCountry(obj)
   }
@@ -59,7 +77,8 @@ function App() {
             </div>
             <Routes>
               <Route path="/" element={<Homepage myData={data} func={selectedCountry}/>}></Route>
-              <Route path="/details" element={ <Details obj={country}/>}></Route>
+              <Route path="/countries/:code"  element={ <Details func={borderCountry} obj={country}/>}></Route>
+
             </Routes>
         
         </div>
